@@ -13,11 +13,16 @@ const Contact = () => {
             inventore ut cum ab qui consectetur, maxime rem, deserunt a dolore
             asperiores labore nostrum!
           </p>
-          <form className="contact-form">
+          <form
+            action="https://formspree.io/f/xbjvgeon"
+            method="POST"
+            className="contact-form"
+          >
             <input
               type="email"
               className="form-input"
               placeholder="enter email"
+              name="_replyto"
             />
             <button type="submit" className="submit-btn">
               Subscribe
