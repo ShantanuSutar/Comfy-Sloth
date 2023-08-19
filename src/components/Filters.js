@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useFilterContext } from "../context/filter_context";
 import { getUniqueValues, formatPrice } from "../utils/helpers";
 import { FaCheck } from "react-icons/fa";
+import { all } from "axios";
 
 const Filters = () => {
   const {
@@ -25,11 +26,11 @@ const Filters = () => {
   const companies = getUniqueValues(all_products, "company");
   const colors = getUniqueValues(all_products, "colors");
 
-  console.log(categories);
+  // console.log(categories);
 
-  console.log(companies);
+  // console.log(companies);
 
-  console.log(colors);
+  // console.log(colors);
 
   return (
     <Wrapper>
@@ -87,6 +88,42 @@ const Filters = () => {
             </select>
           </div>
           {/*end of companies */}
+
+          {/* colors */}
+          <div className="form-control">
+            <h5>colors</h5>
+            <div className="colors">
+              {colors.map((c, index) => {
+                if (c === "all") {
+                  return (
+                    <button
+                      key={index}
+                      name="color"
+                      onClick={updateFilters}
+                      data-color="all"
+                      className={color === "all" ? "all-btn active" : "all-btn"}
+                    >
+                      all
+                    </button>
+                  );
+                }
+
+                return (
+                  <button
+                    key={index}
+                    name="color"
+                    style={{ backgroundColor: c }}
+                    className={color === c ? "color-btn active" : "color-btn"}
+                    data-color={c}
+                    onClick={updateFilters}
+                  >
+                    {color === c ? <FaCheck /> : null}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          {/* end of colors */}
         </form>
       </div>
     </Wrapper>
