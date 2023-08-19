@@ -70,7 +70,28 @@ const filter_reducer = (state, action) => {
     return { ...state, filters: { ...state.filters, [name]: value } };
   }
   if (action.type === FILTER_PRODUCTS) {
-    return { ...state };
+    const { all_products } = state;
+    const { text, category, company, color, price, shipping } = state.filters;
+    let tempProducts = [...all_products];
+    //  filtering
+
+    // if (text) {
+    //   tempProducts = tempProducts.filter((product) => {
+    //     return product.name.toLowerCase().startsWith(text);
+    //   });
+    // }
+    // return { ...state, filtered_products: tempProducts };
+
+    //Better Method
+    let wordToMatch = text;
+    tempProducts = tempProducts.filter((temp) => {
+      const regex = new RegExp(wordToMatch, "gi");
+      return temp.name.match(regex);
+    });
+    return {
+      ...state,
+      filtered_products: tempProducts,
+    };
   }
   if (action.type === CLEAR_FILTERS) {
     return {
