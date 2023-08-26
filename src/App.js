@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, PR } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Navbar, Sidebar, Footer } from "./components";
 
 import {
@@ -10,7 +10,6 @@ import {
   Error,
   About,
   Products,
-  Private,
   AuthWrapper,
 } from "./pages";
 import PrivateRoute from "./pages/PrivateRoute";
