@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, PR } from "react-router-dom";
 import { Navbar, Sidebar, Footer } from "./components";
 
 import {
@@ -12,6 +12,7 @@ import {
   Products,
   Private,
 } from "./pages";
+import PrivateRoute from "./pages/PrivateRoute";
 
 function App() {
   return (
@@ -24,7 +25,15 @@ function App() {
         <Route exact path="/cart" element={<Cart />} />
         <Route exact path="/products" element={<Products />} />
         <Route exact path="/products/:id" element={<SingleProduct />} />
-        <Route exact path="/checkout" element={<Checkout />} />
+        <Route
+          exact
+          path="/checkout"
+          element={
+            <PrivateRoute>
+              <Checkout />
+            </PrivateRoute>
+          }
+        />
         <Route path="*" element={<Error />} />
       </Routes>
       <Footer />
