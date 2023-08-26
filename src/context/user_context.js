@@ -14,7 +14,7 @@ export const UserProvider = ({ children }) => {
     console.log(`isLoading : ${isLoading}`);
   }, [isAuthenticated]);
   return (
-    <UserContext.Provider value={{ loginWithRedirect, logout }}>
+    <UserContext.Provider value={{ loginWithRedirect, logout, myUser }}>
       {children}
     </UserContext.Provider>
   );
