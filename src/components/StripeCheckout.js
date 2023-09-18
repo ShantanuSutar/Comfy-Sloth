@@ -57,14 +57,14 @@ const CheckoutForm = () => {
       );
       setClientSecret(data.clientSecret);
     } catch (error) {
-      // console.log(error.response);
+      console.log(error.response);
     }
   };
-
   useEffect(() => {
     createPaymentIntent();
   }, []);
 
+  // console.log(clientSecret ? true : false);
   const handleChange = async (event) => {
     setDisabled(event.empty);
     setError(event.error ? event.error.message : "");
