@@ -2,33 +2,34 @@ import React from "react";
 import styled from "styled-components";
 import { PageHero } from "../components";
 import aboutImg from "../assets/hero-bcg.jpeg";
-
 const AboutPage = () => {
   return (
     <main>
-      <PageHero title="About" />
+      <PageHero title="about" />
       <Wrapper className="page section section-center">
-        <img src={aboutImg} alt="Nice Desk" />
+        <img src={aboutImg} alt="nice desk" />
         <article>
           <div className="title">
-            <h2>Our Story</h2>
+            <h2>our story</h2>
             <div className="underline"></div>
           </div>
           <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis rerum
-            eveniet iusto tenetur cumque soluta similique dolore quos. Libero
-            quaerat dolorum est ipsa debitis explicabo nisi quidem perferendis
-            sed beatae. Lorem ipsum dolor, sit amet consectetur adipisicing
-            elit. Quis rerum eveniet iusto tenetur cumque soluta similique
-            dolore quos. Libero quaerat dolorum est ipsa debitis explicabo nisi
-            quidem perferendis sed beatae.
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugiat
+            accusantium sapiente tempora sed dolore esse deserunt eaque
+            excepturi, delectus error accusamus vel eligendi, omnis beatae.
+            Quisquam, dicta. Eos quod quisquam esse recusandae vitae neque
+            dolore, obcaecati incidunt sequi blanditiis est exercitationem
+            molestiae delectus saepe odio eligendi modi porro eaque in libero
+            minus unde sapiente consectetur architecto. Ullam rerum, nemo iste
+            ex, eaque perspiciatis nisi, eum totam velit saepe sed quos
+            similique amet. Ex, voluptate accusamus nesciunt totam vitae esse
+            iste.
           </p>
         </article>
       </Wrapper>
     </main>
   );
 };
-
 const Wrapper = styled.section`
   display: grid;
   gap: 4rem;

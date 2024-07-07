@@ -13,8 +13,6 @@ import {
 } from "../components";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import CartColumns from "../components/CartColumns";
-
 const SingleProductPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -27,34 +25,37 @@ const SingleProductPage = () => {
 
   useEffect(() => {
     fetchSingleProduct(`${url}${id}`);
+    // eslint-disable-next-line
   }, [id]);
-
   useEffect(() => {
     if (error) {
       setTimeout(() => {
         navigate("/");
       }, 3000);
     }
+    // eslint-disable-next-line
   }, [error]);
-
-  if (loading) return <Loading />;
-  if (error) return <Error />;
+  if (loading) {
+    return <Loading />;
+  }
+  if (error) {
+    return <Error />;
+  }
 
   const {
-    id: sku,
     name,
     price,
     description,
     stock,
     stars,
     reviews,
+    id: sku,
     company,
     images,
   } = product;
-
   return (
     <Wrapper>
-      <PageHero title={name} product={product} />
+      <PageHero title={name} product />
       <div className="section section-center page">
         <Link to="/products" className="btn">
           back to products
@@ -67,15 +68,15 @@ const SingleProductPage = () => {
             <h5 className="price">{formatPrice(price)}</h5>
             <p className="desc">{description}</p>
             <p className="info">
-              <span>Available: </span>
-              {stock > 0 ? "In stock" : "Out of stock"}
+              <span>Available : </span>
+              {stock > 0 ? "In stock" : "out of stock"}
             </p>
             <p className="info">
-              <span>SKU: </span>
+              <span>SKU :</span>
               {sku}
             </p>
             <p className="info">
-              <span>Brand: </span>
+              <span>Brand :</span>
               {company}
             </p>
             <hr />
