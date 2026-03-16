@@ -14,16 +14,14 @@ const AboutPage = () => {
             <div className="underline"></div>
           </div>
           <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugiat
-            accusantium sapiente tempora sed dolore esse deserunt eaque
-            excepturi, delectus error accusamus vel eligendi, omnis beatae.
-            Quisquam, dicta. Eos quod quisquam esse recusandae vitae neque
-            dolore, obcaecati incidunt sequi blanditiis est exercitationem
-            molestiae delectus saepe odio eligendi modi porro eaque in libero
-            minus unde sapiente consectetur architecto. Ullam rerum, nemo iste
-            ex, eaque perspiciatis nisi, eum totam velit saepe sed quos
-            similique amet. Ex, voluptate accusamus nesciunt totam vitae esse
-            iste.
+            Welcome to Comfy-Sloth, where comfort meets craftsmanship. Founded
+            in 2024, we're passionate about creating handcrafted furniture that
+            transforms your living space into a sanctuary of relaxation and style.
+            Our team of skilled artisans combines traditional woodworking techniques
+            with modern design principles to deliver pieces that are not just furniture,
+            but investments in your comfort and well-being. Every piece in our
+            collection is carefully crafted from premium materials, ensuring durability
+            and timeless elegance that lasts for generations.
           </p>
         </article>
       </Wrapper>

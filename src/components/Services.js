@@ -10,9 +10,10 @@ const Services = () => {
             custom furniture <br /> built only for you
           </h3>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe
-            dolorum debitis consectetur reprehenderit non aliquam voluptates
-            dolore aut vero consequuntur.
+            We believe every home deserves unique, personalized furniture.
+            Our custom design service works closely with you to create
+            one-of-a-kind pieces that perfectly match your space, style,
+            and comfort preferences.
           </p>
         </article>
         <div className='services-center'>

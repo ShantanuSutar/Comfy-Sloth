@@ -7,9 +7,9 @@ const Contact = () => {
         <h3>Join our newsletter and get 20% off</h3>
         <div className='content'>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat
-            sint unde quaerat ratione soluta veniam provident adipisci cumque
-            eveniet tempore?
+            Subscribe to our newsletter and receive exclusive offers, design
+            tips, and early access to new collections. Join the Comfy-Sloth
+            family and transform your home into a haven of comfort and style.
           </p>
           <form className='contact-form'>
             <input
