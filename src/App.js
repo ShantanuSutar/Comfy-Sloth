@@ -11,7 +11,9 @@ import {
   Products,
   PrivateRoute,
   AuthWrapper,
+  TestStripePage,
 } from "./pages";
+
 function App() {
   return (
     <AuthWrapper>
@@ -24,6 +26,7 @@ function App() {
           <Route path="cart" element={<Cart />} />
           <Route path="products" element={<Products />} />
           <Route path="products/:id" element={<SingleProduct />} />
+          <Route path="test-stripe" element={<TestStripePage />} />
           <Route
             path="checkout"
             element={

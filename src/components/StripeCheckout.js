@@ -15,6 +15,12 @@ import { useNavigate } from "react-router-dom";
 
 const promise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
+// Determine the API endpoint based on environment
+// For local dev: use port 3001, for production: use relative path
+const API_ENDPOINT = process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost'
+  ? 'http://localhost:3001/api/create-payment-intent'
+  : '/api/create-payment-intent';
+
 const CheckoutForm = () => {
   const { cart, total_amount, shipping_fee, clearCart } = useCartContext();
   const { myUser } = useUserContext();
@@ -29,14 +35,39 @@ const CheckoutForm = () => {
 
   const createPaymentIntent = async () => {
     try {
-      const { data } = await axios.post(
-        "/.netlify/functions/create-payment-intent",
-
-        JSON.stringify({ cart, shipping_fee, total_amount })
+      console.log("Creating payment intent...");
+      console.log("Using API endpoint:", API_ENDPOINT);
+      console.log("Environment:", process.env.NODE_ENV);
+      
+      const response = await axios.post(
+        API_ENDPOINT,
+        { cart, shipping_fee, total_amount },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
       );
+      
+      console.log("Full response:", response);
+      const data = response.data;
+      console.log("Payment Intent Response:", data);
+      
+      // Validate clientSecret before setting it
+      if (!data.clientSecret || typeof data.clientSecret !== 'string' || !data.clientSecret.includes('_secret_')) {
+        console.error("Invalid clientSecret format. Received:", data);
+        console.error("Expected format: pi_xxx_secret_yyy");
+        setError("Payment configuration error - invalid client secret received from server");
+        return;
+      }
+      
       setClientSecret(data.clientSecret);
+      console.log("ClientSecret set successfully:", data.clientSecret.substring(0, 20) + '...');
     } catch (error) {
-      // console.log(error.response)
+      console.error("Error creating payment intent:", error);
+      console.error("Error response:", error.response?.data);
+      console.error("Error status:", error.response?.status);
+      setError(`Failed to initialize payment: ${error.message}. Check console for details.`);
     }
   };
   useEffect(() => {
@@ -69,23 +100,41 @@ const CheckoutForm = () => {
   };
   const handleSubmit = async (ev) => {
     ev.preventDefault();
+    
+    // Critical validation: Ensure clientSecret is valid before calling Stripe
+    if (!clientSecret || !clientSecret.includes('_secret_')) {
+      console.error("BLOCKED: Invalid clientSecret:", clientSecret);
+      setError("Payment not initialized properly. Please refresh the page and try again.");
+      setProcessing(false);
+      return;
+    }
+    
+    console.log("Proceeding with payment. ClientSecret:", clientSecret.substring(0, 20) + '...');
     setProcessing(true);
-    const payload = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: elements.getElement(CardElement),
-      },
-    });
-    if (payload.error) {
-      setError(`Payment failed ${payload.error.message}`);
+    
+    try {
+      const payload = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: elements.getElement(CardElement),
+        },
+      });
+      
+      if (payload.error) {
+        setError(`Payment failed ${payload.error.message}`);
+        setProcessing(false);
+      } else {
+        setError(null);
+        setProcessing(false);
+        setSucceeded(true);
+        setTimeout(() => {
+          clearCart();
+          navigate("/");
+        }, 10000);
+      }
+    } catch (error) {
+      console.error("Payment error:", error);
+      setError(`Payment error: ${error.message}`);
       setProcessing(false);
-    } else {
-      setError(null);
-      setProcessing(false);
-      setSucceeded(true);
-      setTimeout(() => {
-        clearCart();
-        navigate("/");
-      }, 10000);
     }
   };
   return (
@@ -100,7 +149,13 @@ const CheckoutForm = () => {
         <article>
           <h4>Hello, {myUser && myUser.name}</h4>
           <p>Your total is {formatPrice(total_amount)}</p>
-          <p>Test Card Number: 4242 4242 4242 4242</p>
+<InfoBox>
+        <h3>Test Card Details:</h3>
+        <p><strong>Card Number:</strong> 4242 4242 4242 4242</p>
+        <p><strong>Expiry:</strong> Any future date (e.g., 12/34)</p>
+        <p><strong>CVC:</strong> Any 3 digits (e.g., 123)</p>
+        <p><strong>ZIP:</strong> Any 5 digits (e.g., 400001)</p>
+      </InfoBox>
         </article>
       )}
       <form id="payment-form" onSubmit={handleSubmit}>
@@ -143,6 +198,19 @@ const StripeCheckout = () => {
     </Wrapper>
   );
 };
+
+const InfoBox = styled.div`
+  background: #e3f2fd;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+  text-align: left;
+  
+  p {
+    margin: 5px 0;
+    font-size: 14px;
+  }
+`;
 
 const Wrapper = styled.section`
   form {
